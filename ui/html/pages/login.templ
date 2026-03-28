@@ -1,0 +1,40 @@
+package pages
+
+import (
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/layouts"
+)
+
+templ LoginPage(data models.TemplateData) {
+	{{ form, _ := data.Form.(models.UserLoginForm) }}
+	@layouts.Base(
+		"Login",
+		data,
+		loginPageContent(form, data.CSRFToken))
+}
+
+templ loginPageContent(form models.UserLoginForm, csrfToken string) {
+	<form actio="/user/login" method="post" novalidate>
+		<input type="hidden" name="csrf_token" value={ csrfToken }/>
+		for _, err := range form.NonFieldErrors {
+			<div class="error">{ err }</div>
+		}
+		<div>
+			<label for="">Email:</label>
+			if emailErr, ok := form.FieldErrors["email"]; ok {
+				<label class="error">{ emailErr }</label>
+			}
+			<input type="email" name="email" value={ form.Email }/>
+		</div>
+		<div>
+			<label>Password:</label>
+			if passwdErr, ok := form.FieldErrors["password"]; ok {
+				<label class="error">{ passwdErr }</label>
+			}
+			<input type="password" name="password"/>
+		</div>
+		<div>
+			<input type="submit" value="Login"/>
+		</div>
+	</form>
+}

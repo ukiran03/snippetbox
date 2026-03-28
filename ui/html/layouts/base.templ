@@ -1,0 +1,39 @@
+package layouts
+
+import (
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/partials"
+)
+
+templ Base(title string, data models.TemplateData, content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="utf-8"/>
+			<title>{ title }</title>
+			<link rel="stylesheet" href="/static/css/main.css"/>
+			<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon"/>
+			<link
+				rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700"
+			/>
+		</head>
+		<body>
+			<header>
+				<h1><a href="/">Snippetbox</a></h1>
+			</header>
+			@partials.Nav(data)
+			<main>
+				if data.Flash != "" {
+					<div class="flash">{ data.Flash }</div>
+				}
+				@content
+			</main>
+			<footer>
+				Powered by <a href="https://golang.org/">Go</a>
+				in { data.CurrentYear }
+			</footer>
+			<script src="/static/js/main.js" type="text/javascript"></script>
+		</body>
+	</html>
+}

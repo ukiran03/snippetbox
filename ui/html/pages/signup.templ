@@ -1,0 +1,44 @@
+package pages
+
+import (
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/layouts"
+)
+
+templ SignupPage(data models.TemplateData) {
+	{{ form, _ := data.Form.(models.UserSignupForm) }}
+	@layouts.Base(
+		"Signup",
+		data,
+		signupPageContent(form, data.CSRFToken))
+}
+
+templ signupPageContent(form models.UserSignupForm, csrfToken string) {
+	<form action="/user/signup" method="post" novalidate>
+		<input type="hidden" name="csrf_token" value={ csrfToken }/>
+		<div>
+			<label>Name:</label>
+			if nameErr, ok := form.FieldErrors["name"]; ok {
+				<label class="error">{ nameErr }</label>
+			}
+			<input type="text" name="name" value={ form.Name }/>
+		</div>
+		<div>
+			<label>Email:</label>
+			if emailErr, ok := form.FieldErrors["email"]; ok {
+				<label class="error">{ emailErr }</label>
+			}
+			<input type="email" name="email" value={ form.Email }/>
+		</div>
+		<div>
+			<label>Password:</label>
+			if passwdErr, ok := form.FieldErrors["password"]; ok {
+				<label class="error">{ passwdErr }</label>
+			}
+			<input type="password" name="password"/>
+		</div>
+		<div>
+			<input type="submit" value="Signup"/>
+		</div>
+	</form>
+}

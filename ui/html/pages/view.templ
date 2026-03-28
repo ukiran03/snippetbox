@@ -1,0 +1,30 @@
+package pages
+
+import (
+	"fmt"
+	"strconv"
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/layouts"
+)
+
+templ ViewPage(data models.TemplateData) {
+	@layouts.Base(
+		fmt.Sprintf("Snippet #%d", data.Snippet.ID),
+		data,
+		snippetContent(data.Snippet))
+}
+
+templ snippetContent(s models.Snippet) {
+	<div class="snippet">
+		<div class="metadata">
+			<strong>{ s.Title }</strong>
+			<span>#{ strconv.Itoa(s.ID) }</span>
+		</div>
+		<pre><code>{ s.Content }</code></pre>
+		<div class="metadata">
+			// Using fmt.Sprint or a custom helper for dates
+			<time>Created: { s.Created.Format("02 Jan 2006 at 15:04") }</time>
+			<time>Expires: { s.Expires.Format("02 Jan 2006 at 15:04") }</time>
+		</div>
+	</div>
+}

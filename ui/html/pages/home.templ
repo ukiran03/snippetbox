@@ -1,0 +1,42 @@
+package pages
+
+import (
+	"fmt"
+	"strconv"
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/layouts"
+)
+
+templ HomePage(data models.TemplateData) {
+	@layouts.Base("Home - Snippetbox", data, homeContent(data.Snippets))
+}
+
+templ homeContent(snippets []models.Snippet) {
+	<h2>Latest Snippets</h2>
+	if len(snippets) > 0 {
+		<table>
+			<tr>
+				<th>Title</th>
+				<th>Created</th>
+				<th>ID</th>
+			</tr>
+			for _, s := range snippets {
+				<tr>
+					<td>
+						<a href={ templ.SafeURL(fmt.Sprintf("/snippet/view/%d", s.ID)) }>
+							{ s.Title }
+						</a>
+					</td>
+					<td>{ s.Created.Format("02 Jan 2006 at 15:04") }</td>
+					<td>#{ strconv.Itoa(s.ID) }</td>
+				</tr>
+			}
+		</table>
+	} else {
+		@EmptyState("There's nothing to see here yet!")
+	}
+}
+
+templ EmptyState(message string) {
+	<p class="muted"><i>{ message }</i></p>
+}

@@ -1,0 +1,64 @@
+package pages
+
+import (
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/layouts"
+)
+
+templ CreatePage(data models.TemplateData) {
+	{{ form, _ := data.Form.(models.SnippetCreateForm) }}
+	@layouts.Base(
+		"Create a New Snippet",
+		data,
+		createPageContent(form, data.CSRFToken))
+}
+
+templ createPageContent(form models.SnippetCreateForm, csrfToken string) {
+	<form action="/snippet/create" method="POST">
+		<input type="hidden" name="csrf_token" value={ csrfToken }/>
+		<div>
+			<label>Title:</label>
+			if err, ok := form.FieldErrors["title"]; ok {
+				<label class="error">{ err }</label>
+			}
+			<input type="text" name="title" value={ form.Title }/>
+		</div>
+		<div>
+			<label>Content:</label>
+			if err, ok := form.FieldErrors["content"]; ok {
+				<label class="error">{ err }</label>
+			}
+			<textarea name="content">{ form.Content }</textarea>
+		</div>
+		<div>
+			<label>Delete in:</label>
+			<input
+				name="expires"
+				type="radio"
+				value="365"
+				if form.Expires == 365 {
+					checked
+				}
+			/>One Year
+			<input
+				name="expires"
+				type="radio"
+				value="7"
+				if form.Expires == 7 {
+					checked
+				}
+			/>One Week
+			<input
+				name="expires"
+				type="radio"
+				value="1"
+				if form.Expires == 1 {
+					checked
+				}
+			/>One Day
+		</div>
+		<div>
+			<input type="submit" value="Publish snippet"/>
+		</div>
+	</form>
+}

@@ -1,0 +1,23 @@
+* Stack
+- templ + html :: instead of just html/template
+- sqlx :: instead of database/sql
+  https://github.com/vinovest/sqlx/
+- PostgresSQL :: instead of MySQL
+  pgx as the postgresql dirver ~github.com/jackc/pgx/v5/stdlib~
+
+** database setup
+#+begin_src go
+import (
+    "github.com/jmoiron/sqlx"
+    _ "github.com/jackc/pgx/v5/stdlib" // This registers "pgx" as a driver
+)
+
+func main() {
+    // Connect using "pgx" as the driver name
+    dsn := "postgres://user:pass@localhost:5432/todo_db"
+    db, err := sqlx.Connect("pgx", dsn)
+    if err != nil {
+        panic(err)
+    }
+}
+#+end_src
