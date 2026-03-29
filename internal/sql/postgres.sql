@@ -140,6 +140,7 @@ INSERT INTO users (NAME, email, hashed_password, created)
        VALUES ($1 $2 $3, now())
        RETURNING id
 
+-- password = 'passukiran'
 SELECT id, hashed_password FROM users WHERE email = 'ushakiranreddi@gmail.com';
 
 -- User's existence in the DB
