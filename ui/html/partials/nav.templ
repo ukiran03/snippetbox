@@ -6,6 +6,7 @@ templ Nav(data models.TemplateData) {
 	<nav>
 		<div>
 			<a href="/">Home</a>
+			<a href="/about">About</a>
 			if data.IsAuthenticated {
 				<a href="/snippet/create">Create snippet</a>
 			}

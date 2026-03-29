@@ -1,0 +1,19 @@
+package pages
+
+import (
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/layouts"
+)
+
+templ AboutPage(data models.TemplateData) {
+	@layouts.Base("About - Snippetbox", data, aboutContent())
+}
+
+templ aboutContent() {
+	<h2>About</h2>
+	<p>
+		This is the project built by following the great
+		<b>Let's Go</b> book written by Legendary <b>Alex Edwards</b>.
+		I am indebted for his work!, Thank You very much
+	</p>
+}

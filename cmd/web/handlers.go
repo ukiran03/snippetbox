@@ -31,6 +31,15 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (app *application) about(w http.ResponseWriter, r *http.Request) {
+	data := app.NewTemplateData(r)
+	err := pages.AboutPage(data).Render(r.Context(), w)
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+}
+
 func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil || id < 1 {
