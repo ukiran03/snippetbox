@@ -2,7 +2,9 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
+	"runtime/debug"
 	"time"
 
 	"github.com/go-playground/form/v4"
@@ -27,18 +29,27 @@ func (app *application) isAuthenticated(r *http.Request) bool {
 	return isAuthenticated
 }
 
-func (app *application) serverError(
-	w http.ResponseWriter, r *http.Request, err error,
-) {
+func (app *application) serverError(w http.ResponseWriter, r *http.Request, err error) {
 	var (
 		method = r.Method
 		uri    = r.URL.RequestURI()
 	)
-	app.logger.Error(err.Error(), "method", method, "uri", uri)
 
-	http.Error(w,
-		http.StatusText(http.StatusInternalServerError),
-		http.StatusInternalServerError)
+	if app.debugMode {
+		trace := string(debug.Stack())
+		app.logger.Error(err.Error(), "method", method, "url", uri, "trace", trace)
+
+		http.Error(w,
+			fmt.Sprintf("Error: %v\n\n%s", err, trace),
+			http.StatusInternalServerError)
+
+	} else {
+		app.logger.Error(err.Error(), "method", method, "uri", uri)
+
+		http.Error(w,
+			http.StatusText(http.StatusInternalServerError),
+			http.StatusInternalServerError)
+	}
 }
 
 func (app *application) clientError(w http.ResponseWriter, status int) {

@@ -18,6 +18,7 @@ import (
 )
 
 type application struct {
+	debugMode      bool
 	logger         *slog.Logger
 	snippets       models.SnippetModelInterface
 	users          models.UserModelInterface
@@ -27,6 +28,7 @@ type application struct {
 
 func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
+	debug := flag.Bool("debug", false, "Debug mode")
 	dsn := flag.String(
 		"dsn",
 		"postgres://web:qwe@localhost:5432/snippetbox?search_path=snippets&sslmode=disable",
@@ -51,6 +53,7 @@ func main() {
 	sessionManager.Lifetime = 12 * time.Hour
 
 	app := &application{
+		debugMode:      *debug,
 		logger:         logger,
 		snippets:       &models.SnippetModel{DB: db},
 		users:          &models.UserModel{DB: db},

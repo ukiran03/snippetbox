@@ -6,10 +6,10 @@ default:
 generate:
     templ generate
 
-# Live reload for development (The Wgo Way)
-dev:
+# Live reload for development with FLAGs
+dev +args="":
     wgo -file=.go -file=.templ -xfile=_templ.go \
-    templ generate ./ui/... :: go run ./cmd/web
+    templ generate ./ui/... :: go run ./cmd/web {{args}}
 
 # Run tests with file watching
 watch-test:
