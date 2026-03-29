@@ -1,0 +1,28 @@
+package pages
+
+import (
+	"ukiran.com/snippetbox/internal/models"
+	"ukiran.com/snippetbox/ui/html/layouts"
+)
+
+templ AccountPage(data models.TemplateData) {
+	@layouts.Base("Account - Snippetbox", data, accountContent(data.User))
+}
+
+templ accountContent(user models.User) {
+	<h2>Your Account</h2>
+	<table>
+		<tr>
+			<th>Name</th>
+			<td>{ user.Name }</td>
+		</tr>
+		<tr>
+			<th>Email</th>
+			<td>{ user.Email }</td>
+		</tr>
+		<tr>
+			<th>Joined</th>
+			<td>{ user.Created.Format("02 Jan 2006 at 15:04") }</td>
+		</tr>
+	</table>
+}

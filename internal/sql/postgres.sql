@@ -144,3 +144,6 @@ SELECT id, hashed_password FROM users WHERE email = 'ushakiranreddi@gmail.com';
 
 -- User's existence in the DB
 SELECT EXISTS(SELECT 1 FROM users WHERE id = $1)
+
+-- Get a user's record given their id
+SELECT NAME, email, created FROM users WHERE id = $1

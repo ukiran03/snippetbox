@@ -126,6 +126,27 @@ func (app *application) snippetCreatePost(
 	http.Redirect(w, r, fmt.Sprintf("/snippet/view/%d", id), http.StatusSeeOther)
 }
 
+func (app *application) accountView(w http.ResponseWriter, r *http.Request) {
+	userId := app.sessionManager.GetInt(r.Context(), "authenticatedUserID")
+	user, err := app.users.Get(userId)
+	if err != nil {
+		if errors.Is(err, models.ErrNoRecord) {
+			http.Redirect(w, r, "/user/login", http.StatusSeeOther)
+		} else {
+			app.serverError(w, r, err)
+		}
+		return
+	}
+	data := app.NewTemplateData(r)
+	data.User = user
+
+	err = pages.AccountPage(data).Render(r.Context(), w)
+	if err != nil {
+		app.serverError(w, r, err)
+	}
+	return
+}
+
 func (app *application) userSignup(w http.ResponseWriter, r *http.Request) {
 	data := app.NewTemplateData(r)
 	data.Form = models.UserSignupForm{}

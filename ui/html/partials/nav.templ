@@ -13,6 +13,7 @@ templ Nav(data models.TemplateData) {
 		</div>
 		<div>
 			if data.IsAuthenticated {
+				<a href="/account/view">Account</a>
 				<form action="/user/logout" method="POST">
 					<input
 						type="hidden"
