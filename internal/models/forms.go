@@ -21,3 +21,10 @@ type UserLoginForm struct {
 	Password            string `form:"password"`
 	validator.Validator `form:"-"`
 }
+
+type AccountPasswordUpdateForm struct {
+	CurrentPassword     string `form:"current_password"`
+	NewPassword         string `form:"new_password"`
+	NewPasswordConfirm  string `form:"new_password_confirm"`
+	validator.Validator `form:"-"`
+}

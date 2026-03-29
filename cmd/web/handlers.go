@@ -301,3 +301,71 @@ func (app *application) userLogoutPost(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
+
+func (app *application) accountPasswordUpdate(
+	w http.ResponseWriter, r *http.Request,
+) {
+	data := app.NewTemplateData(r)
+	data.Form = models.AccountPasswordUpdateForm{}
+	err := pages.AccountPwdPage(data).Render(r.Context(), w)
+	if err != nil {
+		app.serverError(w, r, err)
+	}
+	return
+}
+
+func (app *application) accountPasswordUpdatePost(
+	w http.ResponseWriter, r *http.Request,
+) {
+	var form models.AccountPasswordUpdateForm
+
+	err := app.decodePostForm(&form, r)
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	form.CheckField(validator.NotBlank(form.CurrentPassword),
+		"current_password", "This field cannot be blank")
+	form.CheckField(validator.NotBlank(form.NewPassword),
+		"new_password", "This field cannot be blank")
+	form.CheckField(validator.MinChars(form.NewPassword, 8),
+		"new_password", "This field must be at least 8 characters long")
+	form.CheckField(validator.NotBlank(form.NewPasswordConfirm),
+		"new_password_confirm", "This field cannot be blank")
+	form.CheckField(validator.StringEquals(
+		form.NewPassword, form.NewPasswordConfirm),
+		"new_password_confirm", "Passwords do not match")
+
+	if !form.Valid() {
+		data := app.NewTemplateData(r)
+		data.Form = form
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		err := pages.AccountPwdPage(data).Render(r.Context(), w)
+		if err != nil {
+			app.serverError(w, r, err)
+		}
+		return
+	}
+	userId := app.sessionManager.GetInt(r.Context(), "authenticatedUserID")
+
+	err = app.users.PasswordUpdate(userId, form.CurrentPassword, form.NewPassword)
+	if err != nil {
+		if errors.Is(err, models.ErrInvalidCredentials) {
+			form.AddFieldError("current_password", "Current password is incorrect")
+
+			data := app.NewTemplateData(r)
+			data.Form = form
+
+			err := pages.AccountPwdPage(data).Render(r.Context(), w)
+			if err != nil {
+				app.serverError(w, r, err)
+			}
+		} else {
+			app.serverError(w, r, err)
+		}
+		return
+	}
+	app.sessionManager.Put(r.Context(), "flash", "Your password has been updated!")
+	http.Redirect(w, r, "/account/view", http.StatusSeeOther)
+}

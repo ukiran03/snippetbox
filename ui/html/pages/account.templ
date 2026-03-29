@@ -24,5 +24,9 @@ templ accountContent(user models.User) {
 			<th>Joined</th>
 			<td>{ user.Created.Format("02 Jan 2006 at 15:04") }</td>
 		</tr>
+		<tr>
+			<th>Password</th>
+			<td><a href="/account/password/update">Change password</a></td>
+		</tr>
 	</table>
 }

@@ -188,6 +188,8 @@ func TestUserSignup(t *testing.T) {
 	}
 }
 
+// [29-03-2026] FIXME: This test is failing
+
 func TestSnippetCreate(t *testing.T) {
 	app := newTestApplication(t)
 	ts := newTestServer(t, app.routes())

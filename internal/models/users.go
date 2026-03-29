@@ -28,6 +28,7 @@ type UserModelInterface interface {
 	Insert(name, email, password string) error
 	Authenticate(email, password string) (int, error)
 	Exists(id int) (bool, error)
+	PasswordUpdate(id int, currentPwd, newPwd string) error
 }
 
 func (m *UserModel) Insert(name, email, password string) error {
@@ -86,6 +87,47 @@ func (m *UserModel) Exists(id int) (bool, error) {
 	stmt := "SELECT EXISTS(SELECT 1 FROM users WHERE id = $1)"
 	err := m.DB.QueryRow(stmt, id).Scan(&exists)
 	return exists, err
+}
+
+func (m *UserModel) PasswordUpdate(id int, currentPwd, newPwd string) error {
+	var currHashPwd []byte
+
+	stmt := "SELECT hashed_password FROM users WHERE id = $1"
+
+	err := m.DB.Get(&currHashPwd, stmt, id)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return ErrNoRecord
+		}
+		return err
+	}
+
+	err = bcrypt.CompareHashAndPassword(currHashPwd, []byte(currentPwd))
+	if err != nil {
+		if errors.Is(err, bcrypt.ErrMismatchedHashAndPassword) {
+			return ErrInvalidCredentials
+		}
+		return err
+	}
+
+	newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPwd), 12)
+	if err != nil {
+		return err
+	}
+
+	stmt = "UPDATE users SET hashed_password = $1 WHERE id = $2"
+	result, err := m.DB.Exec(stmt, newHashedPassword, id)
+	if err != nil {
+		return err
+	}
+
+	// Check RowsAffected to ensure the user wasn't deleted between
+	// the SELECT and the UPDATE
+	rows, err := result.RowsAffected()
+	if err == nil && rows == 0 {
+		return ErrNoRecord
+	}
+	return nil
 }
 
 func (m *UserModel) Get(id int) (User, error) {
