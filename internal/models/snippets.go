@@ -25,6 +25,7 @@ type SnippetModelInterface interface {
 	Insert(title, content string, expires int) (int, error)
 	Get(id int) (Snippet, error)
 	Latest() ([]Snippet, error)
+	Delete(id int) error
 }
 
 // This will insert a new snippet into the database.
@@ -41,6 +42,23 @@ func (m *SnippetModel) Insert(title, content string, expires int) (int, error) {
 		return 0, fmt.Errorf("DB Insert: %w", err)
 	}
 	return id, nil
+}
+
+// Delete(id int) will delete the snippet with id.
+func (m *SnippetModel) Delete(id int) error {
+	stmt := `DELETE FROM snippets WHERE id = $1`
+	result, err := m.DB.Exec(stmt, id)
+	if err != nil {
+		return err
+	}
+	rows, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rows == 0 {
+		return ErrNoRecord
+	}
+	return nil
 }
 
 // This will return a specific snippet based on its id.
