@@ -22,4 +22,4 @@ build: generate
 # Clean up build artifacts
 clean:
     rm -rf bin/
-    fd "_templ.go$" -x rm
+    fd -I "_templ.go$" -x rm

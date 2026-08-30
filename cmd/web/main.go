@@ -17,6 +17,20 @@ import (
 	"ukiran.com/snippetbox/internal/models"
 )
 
+func getEnv(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
+}
+
+func getEnvBool(key string, defaultValue bool) bool {
+	if value := os.Getenv(key); value != "" {
+		return value == "true" || value == "1"
+	}
+	return defaultValue
+}
+
 type application struct {
 	debugMode      bool
 	logger         *slog.Logger
@@ -27,11 +41,11 @@ type application struct {
 }
 
 func main() {
-	addr := flag.String("addr", ":4000", "HTTP network address")
-	debug := flag.Bool("debug", false, "Debug mode")
+	addr := flag.String("addr", getEnv("ADDR", ":4000"), "HTTP network address")
+	debug := flag.Bool("debug", getEnvBool("DEBUG", false), "Debug mode")
 	dsn := flag.String(
 		"dsn",
-		"postgres://web:qwe@localhost:5432/snippetbox?search_path=snippets&sslmode=disable",
+		getEnv("DSN", "postgres://web:qwe@localhost:5432/snippetbox?search_path=snippets&sslmode=disable"),
 		"PostgreSQL data source name",
 	)
 	flag.Parse()
@@ -77,7 +91,10 @@ func main() {
 
 	logger.Info("starting server", "addr", *addr)
 
-	err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
+	certPath := getEnv("TLS_CERT", "./tls/cert.pem")
+	keyPath := getEnv("TLS_KEY", "./tls/key.pem")
+
+	err = srv.ListenAndServeTLS(certPath, keyPath)
 	logger.Error(err.Error())
 	os.Exit(1)
 }
