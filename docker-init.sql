@@ -42,3 +42,19 @@ CREATE TABLE IF NOT EXISTS users (
     created TIMESTAMPTZ NOT NULL DEFAULT now(),
     CONSTRAINT users_uc_email UNIQUE (email)
 );
+
+-- Insert demo user (email: demo@example.com, password: demo)
+INSERT INTO users (name, email, hashed_password, created)
+VALUES ('Demo User', 'demo@example.com', '$2a$12$o3D9X8DS42YS8kim/IdG3e3zFpdJqHqT.FMi71GfG2xa7qddqvYNq', now())
+ON CONFLICT (email) DO NOTHING;
+
+-- Insert demo snippet
+INSERT INTO snippets (title, content, created, expires)
+SELECT
+    'Hello World',
+    'fmt.Println("Hello, World!")',
+    now() AT TIME ZONE 'utc',
+    (now() AT TIME ZONE 'utc') + INTERVAL '365 days'
+WHERE NOT EXISTS (
+    SELECT 1 FROM snippets WHERE title = 'Hello World'
+);
