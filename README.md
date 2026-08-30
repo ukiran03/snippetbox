@@ -1,6 +1,6 @@
 # Snippetbox
 
-A secure web application for code snippet management built with Go and PostgreSQL.
+A secure web application for code snippet sharing and management, built with Go and PostgreSQL.
 
 ## Features
 
@@ -8,6 +8,10 @@ A secure web application for code snippet management built with Go and PostgreSQ
 - Code snippet creation and management with expiration dates
 - Minimal, responsive UI built with type-safe templates
 - Seamless containerization with Docker and Docker Compose
+
+## Preview
+
+![SnippetBox Screenshot](assets/screenshot.png)
 
 ## Tech Stack
 
