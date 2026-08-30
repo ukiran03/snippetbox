@@ -6,15 +6,17 @@ WORKDIR /app
 # Install build dependencies
 RUN apk add --no-cache git make
 
-# Copy go mod files
+# Copy go mod files and download dependencies
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy source code
+# Install templ CLI (cached unless go.mod/go.sum changes)
+RUN go install github.com/a-h/templ/cmd/templ@v0.3.1001
+
+# Copy the rest of the source code
 COPY . .
 
-# Install templ CLI and generate Go code
-RUN go install github.com/a-h/templ/cmd/templ@v0.3.1001
+# Generate Go code from templ files
 RUN /go/bin/templ generate ./ui/...
 
 # Build the application
