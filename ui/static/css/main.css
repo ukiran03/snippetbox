@@ -1,4 +1,10 @@
-@import url('https://cdn.jsdelivr.net/fontsource/fonts/iosevka-charon-mono@5.3.0/latin-400-normal.woff2');
+@font-face {
+    font-family: 'Iosevka Charon Mono';
+    src: url('/static/fonts/iosevka-charon-mono-latin-400-normal.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
 * {
     box-sizing: border-box;

@@ -12,7 +12,7 @@ func commonHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set(
 			"Content-Security-Policy",
-			"default-src 'self'; style-src 'self' fonts.googleapis.com; font-src fonts.gstatic.com")
+			"default-src 'self'; style-src 'self' fonts.googleapis.com; font-src 'self' fonts.gstatic.com")
 
 		w.Header().Set("Referrer-Policy", "origin-when-cross-origin")
 		w.Header().Set("X-Content-Type-Options", "nosniff")
@@ -54,7 +54,11 @@ func (app *application) recoverPanic(next http.Handler) http.Handler {
 func (app *application) requireAuthentication(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !app.isAuthenticated(r) {
-			app.sessionManager.Put(r.Context(), "redirectPathAfterLogin", r.URL.Path)
+			app.sessionManager.Put(
+				r.Context(),
+				"redirectPathAfterLogin",
+				r.URL.Path,
+			)
 			http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 			return
 		}
