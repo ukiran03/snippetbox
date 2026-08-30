@@ -1,9 +1,11 @@
+@import url('https://cdn.jsdelivr.net/fontsource/fonts/iosevka-charon-mono@5.3.0/latin-400-normal.woff2');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-size: 18px;
-    font-family: "Ubuntu Mono", monospace;
+    font-size: 16px;
+    font-family: "Iosevka Charon Mono", monospace;
 }
 
 html, body {
@@ -12,8 +14,8 @@ html, body {
 
 body {
     line-height: 1.5;
-    background-color: #F1F3F6;
-    color: #34495E;
+    background-color: #F4F7FA;
+    color: #2C3E50;
     overflow-y: scroll;
 }
 
@@ -41,7 +43,7 @@ h1 a {
 
 h1 a:hover {
     text-decoration: none;
-    color: #34495E;
+    color: #2C3E50;
 }
 
 h2 {
@@ -52,12 +54,12 @@ h2 {
 }
 
 a {
-    color: #62CB31;
+    color: #2980B9;
     text-decoration: none;
 }
 
 a:hover {
-    color: #4EB722;
+    color: #1F618D;
     text-decoration: underline;
 }
 
@@ -67,13 +69,13 @@ textarea, input:not([type="submit"]) {
 }
 
 header {
-    background-image: -webkit-linear-gradient(left, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
-    background-image: -moz-linear-gradient(left, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
-    background-image: -ms-linear-gradient(left, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
-    background-image: linear-gradient(to right, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
+    background-image: -webkit-linear-gradient(left, #1B4F72, #1B4F72 25%, #2874A6 25%, #2874A6 35%, #3498DB 35%, #3498DB 45%, #5DADE2 45%, #5DADE2 55%, #85C1E9 55%, #85C1E9 65%, #AED6F1 65%, #AED6F1 75%, #2E86C1 85%, #2E86C1 85%, #154360 85%, #154360 100%);
+    background-image: -moz-linear-gradient(left, #1B4F72, #1B4F72 25%, #2874A6 25%, #2874A6 35%, #3498DB 35%, #3498DB 45%, #5DADE2 45%, #5DADE2 55%, #85C1E9 55%, #85C1E9 65%, #AED6F1 65%, #AED6F1 75%, #2E86C1 85%, #2E86C1 85%, #154360 85%, #154360 100%);
+    background-image: -ms-linear-gradient(left, #1B4F72, #1B4F72 25%, #2874A6 25%, #2874A6 35%, #3498DB 35%, #3498DB 45%, #5DADE2 45%, #5DADE2 55%, #85C1E9 55%, #85C1E9 65%, #AED6F1 65%, #AED6F1 75%, #2E86C1 85%, #2E86C1 85%, #154360 85%, #154360 100%);
+    background-image: linear-gradient(to right, #1B4F72, #1B4F72 25%, #2874A6 25%, #2874A6 35%, #3498DB 35%, #3498DB 45%, #5DADE2 45%, #5DADE2 55%, #85C1E9 55%, #85C1E9 65%, #AED6F1 65%, #AED6F1 75%, #2E86C1 85%, #2E86C1 85%, #154360 85%, #154360 100%);
     background-size: 100% 6px;
     background-repeat: no-repeat;
-    border-bottom: 1px solid #E4E5E7;
+    border-bottom: 1px solid #D5DBDB;
     overflow: auto;
     padding-top: 33px;
     padding-bottom: 27px;
@@ -81,17 +83,17 @@ header {
 }
 
 header a {
-    color: #34495E;
+    color: #2C3E50;
     text-decoration: none;
 }
 
 nav {
-    border-bottom: 1px solid #E4E5E7;
+    border-bottom: 1px solid #D5DBDB;
     padding-top: 17px;
     padding-bottom: 15px;
-    background: #F7F9FA;
+    background: #EBF5FB;
     height: 60px;
-    color: #6A6C6F;
+    color: #5D6D7E;
 }
 
 nav a {
@@ -119,7 +121,7 @@ nav div:last-child a {
 }
 
 nav a.live {
-    color: #34495E;
+    color: #2C3E50;
     cursor: default;
 }
 
@@ -135,15 +137,15 @@ nav a.live:after {
     top: 9px;
     width: 14px;
     height: 14px;
-    background: #F7F9FA;
-    border-left: 1px solid #E4E5E7;
-    border-bottom: 1px solid #E4E5E7;
+    background: #EBF5FB;
+    border-left: 1px solid #D5DBDB;
+    border-bottom: 1px solid #D5DBDB;
     -moz-transform: rotate(45deg);
     -webkit-transform: rotate(-45deg);
 }
 
 a.button, input[type="submit"] {
-    background-color: #62CB31;
+    background-color: #2980B9;
     border-radius: 3px;
     color: #FFFFFF;
     padding: 18px 27px;
@@ -154,7 +156,7 @@ a.button, input[type="submit"] {
 }
 
 a.button:hover, input[type="submit"]:hover {
-    background-color: #4EB722;
+    background-color: #1F618D;
     color: #FFFFFF;
     cursor: pointer;
     text-decoration: none;
@@ -165,7 +167,7 @@ form div {
 }
 
 form div:last-child {
-    border-top: 1px dashed #E4E5E7;
+    border-top: 1px dashed #D5DBDB;
 }
 
 form input[type="radio"] {
@@ -178,9 +180,9 @@ form input[type="text"], form input[type="password"], form input[type="email"] {
 }
 
 form input[type=text], form input[type="password"], form input[type="email"], textarea {
-    color: #6A6C6F;
+    color: #5D6D7E;
     background: #FFFFFF;
-    border: 1px solid #E4E5E7;
+    border: 1px solid #D5DBDB;
     border-radius: 3px;
 }
 
@@ -190,13 +192,13 @@ form label {
 }
 
 .error {
-    color: #C0392B;
+    color: #CB4335;
     font-weight: bold;
     display: block;
 }
 
 .error + textarea, .error + input {
-    border-color: #C0392B !important;
+    border-color: #CB4335 !important;
     border-width: 2px !important;
 }
 
@@ -210,31 +212,31 @@ button {
     background: none;
     padding: 0;
     border: none;
-    color: #62CB31;
+    color: #2980B9;
     text-decoration: none;
 }
 
 button:hover {
-    color: #4EB722;
+    color: #1F618D;
     text-decoration: underline;
     cursor: pointer;
 }
 
 .snippet {
     background-color: #FFFFFF;
-    border: 1px solid #E4E5E7;
+    border: 1px solid #D5DBDB;
     border-radius: 3px;
 }
 
 .snippet pre {
     padding: 18px;
-    border-top: 1px solid #E4E5E7;
-    border-bottom: 1px solid #E4E5E7;
+    border-top: 1px solid #D5DBDB;
+    border-bottom: 1px solid #D5DBDB;
 }
 
 .snippet .metadata {
-    background-color: #F7F9FA;
-    color: #6A6C6F;
+    background-color: #EBF5FB;
+    color: #5D6D7E;
     padding: 0.75em 18px;
     overflow: auto;
 }
@@ -244,7 +246,7 @@ button:hover {
 }
 
 .snippet .metadata strong {
-    color: #34495E;
+    color: #2C3E50;
 }
 
 .snippet .metadata time {
@@ -262,7 +264,7 @@ button:hover {
 div.flash {
     color: #FFFFFF;
     font-weight: bold;
-    background-color: #34495E;
+    background-color: #2C3E50;
     padding: 18px;
     margin-bottom: 36px;
     text-align: center;
@@ -270,7 +272,7 @@ div.flash {
 
 div.error {
     color: #FFFFFF;
-    background-color: #C0392B;
+    background-color: #CB4335;
     padding: 18px;
     margin-bottom: 36px;
     font-weight: bold;
@@ -279,7 +281,7 @@ div.error {
 
 table {
     background: white;
-    border: 1px solid #E4E5E7;
+    border: 1px solid #D5DBDB;
     border-collapse: collapse;
     width: 100%;
 }
@@ -291,23 +293,23 @@ td, th {
 
 th:last-child, td:last-child {
     text-align: right;
-    color: #6A6C6F;
+    color: #5D6D7E;
 }
 
 tr {
-    border-bottom: 1px solid #E4E5E7;
+    border-bottom: 1px solid #D5DBDB;
 }
 
 tr:nth-child(2n) {
-    background-color: #F7F9FA;
+    background-color: #EBF5FB;
 }
 
 footer {
-    border-top: 1px solid #E4E5E7;
+    border-top: 1px solid #D5DBDB;
     padding-top: 17px;
     padding-bottom: 15px;
-    background: #F7F9FA;
+    background: #EBF5FB;
     height: 60px;
-    color: #6A6C6F;
+    color: #5D6D7E;
     text-align: center;
 }
