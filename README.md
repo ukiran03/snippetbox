@@ -18,15 +18,15 @@ A secure web application for code snippet sharing and management, built with Go 
 **Backend**
 - Go 1.26
 - PostgreSQL 16
-- pgx/v5 (PostgreSQL driver)
-- sqlx (database extensions)
-- scs/v2 (session management)
-- nosurf (CSRF protection)
+- [pgx/v5](https://github.com/jackc/pgx) (PostgreSQL driver)
+- [sqlx](https://github.com/vinovest/sqlx) (database extensions)
+- [scs/v2](https://github.com/vinovest/sqlx) (session management)
+- [nosurf](https://github.com/justinas/nosurf) (CSRF protection)
 - bcrypt (password hashing)
-- alice (middleware chaining)
+- [alice](https://github.com/justinas/alice) (middleware chaining)
 
 **Frontend**
-- templ (type-safe templates)
+- [templ](https://github.com/a-h/templ) (type-safe templates)
 - Vanilla CSS
 
 **DevOps**
